@@ -4,8 +4,7 @@
 
 # Penguin Statistics QQbot
 [![License](https://img.shields.io/github/license/penguin-statistics/backend)](https://github.com/penguin-statistics/backend/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/penguin-statistics/backend?logo=travis)](https://travis-ci.org/penguin-statistics/backend)
-[![Last Commit](https://img.shields.io/github/last-commit/penguin-statistics/backend)](https://github.com/penguin-statistics/qqbot/commits/master)
+[![Last Commit](https://img.shields.io/github/last-commit/penguin-statistics/qqbot)](https://github.com/penguin-statistics/qqbot/commits/master)
 
 This is the **backend** project repository for the [Penguin Statistics](https://penguin-stats.io/?utm_source=github) website.
 
