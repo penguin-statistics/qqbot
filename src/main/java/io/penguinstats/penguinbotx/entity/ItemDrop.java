@@ -1,6 +1,7 @@
 package io.penguinstats.penguinbotx.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @modified By： yamika
  * @version: 0.1
  */
+@Accessors(chain = true)
 @Data
 public class ItemDrop implements Serializable {
     private String stageName;

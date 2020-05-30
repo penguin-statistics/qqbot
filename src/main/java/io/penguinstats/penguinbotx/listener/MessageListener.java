@@ -10,6 +10,7 @@ import io.penguinstats.penguinbotx.config.ApplicationContextAwareConfig;
 import io.penguinstats.penguinbotx.constant.Constants.*;
 import io.penguinstats.penguinbotx.entity.ItemDrop;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
  * @modified By：yamika
  * @version: 0.1
  */
+@Slf4j
 @Component
 @Setter(onMethod = @__(@Autowired))
 public class MessageListener extends IcqListener {
@@ -41,7 +43,7 @@ public class MessageListener extends IcqListener {
     public void messageHandle(EventGroupMessage message){
         System.out.println("received message:"+message.getMessage());
         if(message.getMessage().matches(BotCommand.QUERY_STAGE_REGEX)){
-//            TODO： query
+            log.info("bot start solve query stage message,message:"+message.getMessage());
             List<String> strs = new ArrayList<>();
             Collections.addAll(strs,message.getMessage().split(" "));
             strs.remove(0);
@@ -56,10 +58,33 @@ public class MessageListener extends IcqListener {
                 builder.add(t.getItemName()+":  ")
                         .add(t.getQuantity()+"  ")
                         .add(t.getTimes()+"  ")
-                        .add(new DecimalFormat("0").format(t.getRate()*100)+
+                        .add(new DecimalFormat("0.00").format(t.getRate()*100)+
                         "%")
                         .newLine();
             });
+                builder.newLine();
+            });
+            message.respond(builder.toString());
+        }else if (message.getMessage().matches(BotCommand.QUERY_ITEM_REGEX)){
+            log.info("bot start solve query item message,message:"+message.getMessage());
+//            List<ItemDrop> results = new ArrayList<>();
+            List<String> itemStr = new ArrayList<>();
+            Collections.addAll(itemStr,message.getMessage().split(" "));
+            itemStr.remove(0);
+            ApplicationContext context =
+                    ApplicationContextAwareConfig.getContext();
+            MessageBuilder builder = new MessageBuilder();
+            itemStr.forEach(e->{
+                builder.add(e+"关卡（活动）掉落情况：").newLine();
+                List<ItemDrop> drops =
+                        context.getBean(DropService.class).queryGlobalByItem(e);
+                drops.forEach(d->{
+                    builder.add(d.getStageName()+"  ")
+                            .add(d.getQuantity()+"  ")
+                            .add(d.getTimes()+" ")
+                            .add(new DecimalFormat("0.00").format(d.getRate()*100)+"%").newLine();
+                });
+                builder.newLine();
             });
             message.respond(builder.toString());
         }

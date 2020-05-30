@@ -24,15 +24,18 @@ public class StartService implements ApplicationRunner {
     PicqBotX botX;
     StageService stageService;
     ItemService itemService;
+    DropService dropService;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        log.info("application init at "+new Date());
+    public void run(ApplicationArguments args) {
+        log.info("application init at: "+new Date());
         log.info("Query stages when init at"+new Date());
         stageService.queryStages();
-        log.info("Query item formula when init at"+new Date());
+        log.info("Query items  when init at: "+new Date());
         itemService.queryItems();
-        log.info("start bot:"+new Date());
+        log.info("query drop matrix when init at: "+new Date());
+        dropService.queryMatrix();
+        log.info("start bot: "+new Date());
         botX.startBot();
     }
 }

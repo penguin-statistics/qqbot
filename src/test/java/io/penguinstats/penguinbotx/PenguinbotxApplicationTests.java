@@ -5,8 +5,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.penguinstats.penguinbotx.Service.DropService;
 import io.penguinstats.penguinbotx.constant.Constants;
+import io.penguinstats.penguinbotx.entity.ItemDrop;
 import io.penguinstats.penguinbotx.entity.Stage;
 import io.penguinstats.penguinbotx.entity.query.AdvancedQuery;
+import io.penguinstats.penguinbotx.entity.response.MatrixResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -210,6 +212,41 @@ class PenguinbotxApplicationTests {
             String id = strs.substring(idBegin+7,nameBegin-2);
             String name = strs.substring(nameBegin+5,name_end-2);
             System.out.println("id:"+id+"name:"+name);
+        });
+    }
+
+    @Test
+    public void matrixTest(){
+        List<ItemDrop> matrix = new ArrayList<>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+        RestTemplate template = new RestTemplate();
+        Map<String,String> parameter = new HashMap<>(1);
+//        TODO : support foreign server
+        parameter.put("is_personal","false");
+        parameter.put("server","CN");
+        parameter.put("show_closed_zones","false");
+        ParameterizedTypeReference<MatrixResponse> reference =
+                new ParameterizedTypeReference<MatrixResponse>() {
+                };
+        ResponseEntity<MatrixResponse> response =
+                template.exchange(Constants.PenguiUrl.PENGUIN_MATRIX_API,
+                        HttpMethod.GET,httpEntity,reference,parameter);
+        Objects.requireNonNull(response.getBody()).getMatrix().forEach(e->{
+            String dropStr = e.toString();
+            int stageIndex = dropStr.indexOf("stageId");
+            int itemIndex = dropStr.indexOf("itemId");
+            int quaIndex = dropStr.indexOf("quantity");
+            int timeIndex = dropStr.indexOf("times");
+            int end = dropStr.indexOf("start");
+            String stageId = dropStr.substring(stageIndex+8,itemIndex-2);
+            String itemId = dropStr.substring(itemIndex+7,quaIndex-2);
+            int quantity =Integer.parseInt(dropStr.substring(quaIndex+9,
+                    timeIndex-2));
+            int times = Integer.parseInt(dropStr.substring(timeIndex+6,end-2));
+            System.out.println("itemid:"+itemId+"  stageid:"+stageId+"  times" +
+                    ":"+times+"  qua:"+quantity);
         });
     }
 

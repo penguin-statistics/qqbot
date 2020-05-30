@@ -18,6 +18,8 @@ public class Constants {
                 ".io/PenguinStats/api/v2/users";
          public static final String PENGUIN_FORMULA_API = "https://penguin" +
                  "-stats.io/PenguinStats/api/v2/formula";
+         public static final String PENGUIN_MATRIX_API = "https://penguin" +
+                 "-stats.io/PenguinStats/api/v2/result/matrix";
      }
 
      public static class BotCommand{

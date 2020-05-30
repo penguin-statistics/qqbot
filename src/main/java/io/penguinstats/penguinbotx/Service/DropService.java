@@ -8,11 +8,16 @@ import io.penguinstats.penguinbotx.constant.Constants;
 import io.penguinstats.penguinbotx.entity.ItemDrop;
 import io.penguinstats.penguinbotx.entity.Stage;
 import io.penguinstats.penguinbotx.entity.query.AdvancedQuery;
+import io.penguinstats.penguinbotx.entity.response.MatrixResponse;
 import io.penguinstats.penguinbotx.util.ItemConverter;
 import io.penguinstats.penguinbotx.util.StageConverter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -34,6 +39,7 @@ public class DropService {
 
     StageConverter stageConverter;
     ItemConverter  itemConverter;
+    ApplicationContext context;
 
     public List<ItemDrop> queryGlobalDrobByStage(String stageName) {
         Stage stage = null;
@@ -92,5 +98,59 @@ public class DropService {
             drops.add(drop);
         }
         return drops;
+    }
+
+    public List<ItemDrop> queryGlobalByItem(String itemName){
+        List<ItemDrop> matrix = getProxy().getMatrix();
+        return matrix.stream().filter(e->e.getItemName().equals(itemName)).collect(Collectors.toList());
+    }
+
+    @CachePut(cacheNames = "matrixCache",key = "'matrix'")
+    public List<ItemDrop> queryMatrix(){
+        log.info("query matrix at: "+new Date());
+        List<ItemDrop> matrix = new ArrayList<>();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+        RestTemplate template = new RestTemplate();
+        Map<String,String> parameter = new HashMap<>(1);
+//        TODO : support foreign server
+        parameter.put("is_personal","false");
+        parameter.put("server","CN");
+        parameter.put("show_closed_zones","false");
+        ParameterizedTypeReference<MatrixResponse> reference =
+                new ParameterizedTypeReference<MatrixResponse>() {
+                };
+        ResponseEntity<MatrixResponse> response =
+                template.exchange(Constants.PenguiUrl.PENGUIN_MATRIX_API,
+                        HttpMethod.GET,httpEntity,reference,parameter);
+        Objects.requireNonNull(response.getBody()).getMatrix().forEach(e->{
+            ItemDrop drop = new ItemDrop();
+            String dropStr = e.toString();
+            int stageIndex = dropStr.indexOf("stageId");
+            int itemIndex = dropStr.indexOf("itemId");
+            int quaIndex = dropStr.indexOf("quantity");
+            int timeIndex = dropStr.indexOf("times");
+            int end = dropStr.indexOf("start");
+            String stageId = dropStr.substring(stageIndex+8,itemIndex-2);
+            String itemId = dropStr.substring(itemIndex+7,quaIndex-2);
+            int quantity =Integer.parseInt(dropStr.substring(quaIndex+9,
+                    timeIndex-2));
+            int times = Integer.parseInt(dropStr.substring(timeIndex+6,end-2));
+            String itemName = itemConverter.convert(itemId).getItemName();
+            String stageName = stageConverter.convert2Name(stageId).getStageCode();
+            drop.setStageName(stageName).setItemName(itemName).setStageId(stageId).setItemId(itemId).setTimes(times).setQuantity(quantity).setRate((float)quantity/times);
+            matrix.add(drop);
+        });
+        return matrix;
+    }
+
+    @Cacheable(cacheNames = "matrixCache",key = "'matrix'")
+    public List<ItemDrop> getMatrix(){
+        return getProxy().queryMatrix();
+    }
+
+    public DropService getProxy(){
+        return context.getBean(DropService.class);
     }
 }
