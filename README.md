@@ -18,13 +18,12 @@ This is the **backend** project repository for the [Penguin Statistics](https://
 ## Preparations
 1. Install Maven
 2. Install [Lombok](https://projectlombok.org/) plugin for your IDE
-3. Install 酷q air（酷q pro better）
+3. Install 酷q air（酷Q pro better）
     * 下载地址: https://cqp.cc/b/news (好像是登录之后才能看到下载 Pro 的链接)
     * 下载完后解压到你想安装的目录下
     * 首次启动请运行 `cqa.exe` 或 `cqp.exe`, 并登陆机器人的 QQ 号
     * 然后退出 酷Q (右键悬浮窗点退出)
-4. Install [酷Q HTTP Plugin](https://github.com/richardchien/coolq-http-api
-/releases):
+4. Install [酷Q HTTP Plugin](https://github.com/richardchien/coolq-http-api/releases):
     * 把 `.cpk` 文件下载下来, 放进 `酷Q安装目录/app` 文件夹里
     * 启动 酷Q
     * 右键悬浮窗, 然后点击 `应用 -> 应用管理`
