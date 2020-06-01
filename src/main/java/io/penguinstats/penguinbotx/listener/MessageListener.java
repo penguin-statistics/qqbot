@@ -88,5 +88,25 @@ public class MessageListener extends IcqListener {
             });
             message.respond(builder.toString());
         }
+        else if(message.getMessage().contains("bface")){
+            MessageBuilder builder = new MessageBuilder();
+            if(message.getMessage().contains(
+                    "D48FED6D6985EB9B895B48F8C1AAEDD9")&&message.getSenderId()==498704999L){
+                builder.add("阿包向您表示了感谢~");
+            }else if(message.getMessage().contains(
+                    "DA451667563A69733C71EC4008B0539B")&&message.getSenderId()==498704999L){
+                builder.add("快跑啊，阿包来砍人了~ OvO");
+            } else if(message.getMessage().contains(
+                    "89C96FCD2DF47C3F53CF7E2FF31C563C")){
+                if(message.getSenderId()==498704999L){
+                    builder.add("阿包又在锤人了！");
+                }else{
+                    builder.add(message.getSender().getInfo().getNickname()+
+                            "使出了一锤定音，效果拔群");
+                }
+            }
+            message.respond(builder.toString());
+            log.info("received bface");
+        }
     }
 }

@@ -2,6 +2,7 @@ package io.penguinstats.penguinbotx.config;
 
 import cc.moecraft.icq.PicqBotX;
 import cc.moecraft.icq.PicqConfig;
+import io.penguinstats.penguinbotx.Service.CommandHelp;
 import io.penguinstats.penguinbotx.listener.MessageListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,9 @@ public class BotConfig {
     public PicqBotX getBot(@Autowired PicqConfig config){
         PicqBotX botX = new PicqBotX(config);
         botX.addAccount("penguin bot","127.0.0.1",9101);
+        botX.enableCommandManager("bot -", "!", "/", "~","?");
         botX.getEventManager().registerListeners(new MessageListener());
+        botX.getCommandManager().registerCommand(new CommandHelp());
         return botX;
     }
 }

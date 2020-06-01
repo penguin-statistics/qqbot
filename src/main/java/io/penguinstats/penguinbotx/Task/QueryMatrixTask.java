@@ -1,6 +1,6 @@
 package io.penguinstats.penguinbotx.Task;
 
-import io.penguinstats.penguinbotx.Service.ItemService;
+import io.penguinstats.penguinbotx.Service.DropService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +12,23 @@ import java.util.Date;
 
 /**
  * @author ：yamika
- * @date ：Created in 2020/5/30 2:31
+ * @date ：Created in 2020/6/1 1:12
  * @description ：
  * @modified By： yamika
- * @version: 0.1
+ * @version:
  */
 @Slf4j
 @Setter(onMethod = @__(@Autowired))
 @Component
-public class QueryItemTask {
+public class QueryMatrixTask {
 
-    ItemService itemService;
+    DropService dropService;
 
     @Async("asyncExecutor")
-    @Scheduled(cron = "0 1 17 * * ?")
+    @Scheduled(cron = "0 5 17 * * ?")
     public void scheduledQueryItem(){
-        itemService.queryItems();
-        log.info("Scheduled query item at: "+new Date());
+        dropService.queryMatrix();
+        log.info("Scheduled query drop matrix at: "+new Date());
     }
+
 }
