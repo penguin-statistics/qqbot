@@ -38,9 +38,12 @@ This is the **backend** project repository for the [Penguin Statistics](https://
     [general]
     host=0.0.0.0
     port=9101
-    post_url=http://127.0.0.1:9102
+    post_url=http://127.0.0.1:9102 
+   //部署时请根据实际IP进行修改，如api运行在苏州机，酷q运行在docker中请改为你宿主机和docker对应的内部ip
     ```
     * 保存配置文件
+ 6. 修改程序配置
+  - 如果api和酷q分开运行，请修改
 ## Run
 1. Execute `mvn spring-boot:run` in the root directory of this project. Or run the main method in `PenguinStatisticsApplication` class.
 

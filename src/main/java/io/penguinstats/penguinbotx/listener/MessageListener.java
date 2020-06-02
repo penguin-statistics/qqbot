@@ -42,6 +42,7 @@ public class MessageListener extends IcqListener {
     @EventHandler
     public void messageHandle(EventGroupMessage message){
         System.out.println("received message:"+message.getMessage());
+        message.getBot().getAccountManager().refreshCache();
         if(message.getMessage().matches(BotCommand.QUERY_STAGE_REGEX)){
             log.info("bot start solve query stage message,message:"+message.getMessage());
             List<String> strs = new ArrayList<>();

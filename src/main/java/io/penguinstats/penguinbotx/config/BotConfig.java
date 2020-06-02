@@ -7,7 +7,9 @@ import io.penguinstats.penguinbotx.listener.MessageListener;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.sql.DataSourceDefinition;
@@ -21,11 +23,20 @@ import javax.annotation.sql.DataSourceDefinition;
  */
 @Slf4j
 @Component
+@PropertySource("classpath:application.properties")
 public class BotConfig {
 
+    @Value("${picq.socketport}")
+    int socketPort;
+
+    @Value("${picq.postport}")
+    int postPort;
+
+    @Value("${picq.posturl}")
+    String postUrl;
     @Bean
     public PicqConfig getConfig() {
-        return new PicqConfig(9102)
+        return new PicqConfig(socketPort)
                 .setApiAsync(true)
                 .setDebug(true)
                 .setLogPath("logs")
@@ -36,7 +47,7 @@ public class BotConfig {
     @Bean
     public PicqBotX getBot(@Autowired PicqConfig config){
         PicqBotX botX = new PicqBotX(config);
-        botX.addAccount("penguin bot","127.0.0.1",9101);
+        botX.addAccount("penguin bot",postUrl,postPort);
         botX.enableCommandManager("bot -", "!", "/", "~","?");
         botX.getEventManager().registerListeners(new MessageListener());
         botX.getCommandManager().registerCommand(new CommandHelp());
