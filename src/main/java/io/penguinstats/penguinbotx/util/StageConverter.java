@@ -1,7 +1,7 @@
 package io.penguinstats.penguinbotx.util;
 
 import io.penguinstats.penguinbotx.Exception.NotFoundException;
-import io.penguinstats.penguinbotx.Service.StageService;
+import io.penguinstats.penguinbotx.service.StageService;
 import io.penguinstats.penguinbotx.entity.Stage;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;

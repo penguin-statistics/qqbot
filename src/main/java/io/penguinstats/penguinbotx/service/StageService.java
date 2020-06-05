@@ -1,6 +1,5 @@
-package io.penguinstats.penguinbotx.Service;
+package io.penguinstats.penguinbotx.service;
 
-import com.google.gson.JsonObject;
 import io.penguinstats.penguinbotx.constant.Constants;
 import io.penguinstats.penguinbotx.entity.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
-import io.penguinstats.penguinbotx.constant.Constants.PenguiUrl;
 /**
  * @author ：yamika
  * @date ：Created in 2020/5/26 1:53

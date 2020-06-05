@@ -1,4 +1,4 @@
-package io.penguinstats.penguinbotx.Service;
+package io.penguinstats.penguinbotx.service;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;

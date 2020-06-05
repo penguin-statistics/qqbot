@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "picq.socketport",
+      "type": "java.lang.String",
+      "description": "Description for picq.socketport."
+  }
+] }

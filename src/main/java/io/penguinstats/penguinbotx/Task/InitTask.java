@@ -1,9 +1,8 @@
 package io.penguinstats.penguinbotx.Task;
 
 import cc.moecraft.icq.PicqBotX;
-import io.penguinstats.penguinbotx.Service.ItemService;
-import io.penguinstats.penguinbotx.Service.StageService;
-import io.penguinstats.penguinbotx.config.BotConfig;
+import io.penguinstats.penguinbotx.service.ItemService;
+import io.penguinstats.penguinbotx.service.StageService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

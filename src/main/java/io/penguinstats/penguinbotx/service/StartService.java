@@ -1,4 +1,4 @@
-package io.penguinstats.penguinbotx.Service;
+package io.penguinstats.penguinbotx.service;
 
 import cc.moecraft.icq.PicqBotX;
 import lombok.Setter;

@@ -3,24 +3,20 @@ package io.penguinstats.penguinbotx;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.penguinstats.penguinbotx.Service.DropService;
+import io.penguinstats.penguinbotx.service.DropService;
 import io.penguinstats.penguinbotx.constant.Constants;
 import io.penguinstats.penguinbotx.entity.ItemDrop;
 import io.penguinstats.penguinbotx.entity.Stage;
 import io.penguinstats.penguinbotx.entity.query.AdvancedQuery;
 import io.penguinstats.penguinbotx.entity.response.MatrixResponse;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 

@@ -1,12 +1,11 @@
 package io.penguinstats.penguinbotx.util;
 
-import io.penguinstats.penguinbotx.Service.ItemService;
+import io.penguinstats.penguinbotx.service.ItemService;
 import io.penguinstats.penguinbotx.entity.BaseItem;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**

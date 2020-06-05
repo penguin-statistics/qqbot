@@ -2,17 +2,14 @@ package io.penguinstats.penguinbotx.config;
 
 import cc.moecraft.icq.PicqBotX;
 import cc.moecraft.icq.PicqConfig;
-import io.penguinstats.penguinbotx.Service.CommandHelp;
+import io.penguinstats.penguinbotx.service.CommandHelp;
 import io.penguinstats.penguinbotx.listener.MessageListener;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.sql.DataSourceDefinition;
 
 /**
  * @author ：yamika

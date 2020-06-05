@@ -1,7 +1,6 @@
-package io.penguinstats.penguinbotx.Service;
+package io.penguinstats.penguinbotx.service;
 
 import cc.moecraft.icq.PicqBotX;
-import cc.moecraft.icq.sender.HttpApiNode;
 import cc.moecraft.icq.sender.IcqHttpApi;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

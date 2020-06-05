@@ -1,6 +1,6 @@
 package io.penguinstats.penguinbotx.Task;
 
-import io.penguinstats.penguinbotx.Service.StageService;
+import io.penguinstats.penguinbotx.service.StageService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Date;
 
 /**

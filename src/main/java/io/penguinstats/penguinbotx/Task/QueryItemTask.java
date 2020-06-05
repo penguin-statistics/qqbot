@@ -1,6 +1,6 @@
 package io.penguinstats.penguinbotx.Task;
 
-import io.penguinstats.penguinbotx.Service.ItemService;
+import io.penguinstats.penguinbotx.service.ItemService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
