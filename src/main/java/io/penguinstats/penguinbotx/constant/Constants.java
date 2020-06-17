@@ -24,9 +24,14 @@ public class Constants {
 
      public static class BotCommand{
 //         修改正则
-        public static final String QUERY_STAGE_REGEX = "^查询关卡掉落.*";
-        public static final String QUERY_ITEM_REGEX = "^查询物品掉落.*";
+        public static final String QUERY_STAGE_REGEX = "^查询关卡.*";
+        public static final String QUERY_ITEM_REGEX = "^查询物品.*";
         public static final String QUERY_ITEM_RATE = "^物品概率.*";
          public static final String QUERY_STAGE_RATE = "^关卡概率.*";
+    }
+
+    public static class Bounds{
+         public static final double DROP_RATE_LOWER=0.15;
+         public static final int DROP_QUANTITY_LOWER=1500;
     }
 }

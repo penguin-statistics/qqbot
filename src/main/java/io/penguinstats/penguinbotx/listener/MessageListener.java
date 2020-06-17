@@ -44,7 +44,7 @@ public class MessageListener extends IcqListener {
         if(message.getMessage().matches(BotCommand.QUERY_STAGE_REGEX)){
             log.info("bot start solve query stage message,message:"+message.getMessage());
             List<String> strs = new ArrayList<>();
-            Collections.addAll(strs,message.getMessage().split(" "));
+            Collections.addAll(strs,message.getMessage().split("#"));
             strs.remove(0);
             List<List<ItemDrop>> results = new ArrayList<>();
             MessageBuilder builder = new MessageBuilder();
@@ -54,12 +54,12 @@ public class MessageListener extends IcqListener {
             results.forEach(e->{
                 builder.add(e.get(0).getStageName()+"掉落：").newLine();
                 e.forEach(t->{
-                builder.add(t.getItemName()+":  ")
-                        .add(t.getQuantity()+"  ")
-                        .add(t.getTimes()+"  ")
-                        .add(new DecimalFormat("0.00").format(t.getRate()*100)+
-                        "%")
-                        .newLine();
+                    if(t.getRate()>Bounds.DROP_RATE_LOWER){
+                        builder.add(t.getItemName()+":  ")
+                                .add(new DecimalFormat("0.00").format(t.getRate()*100)+
+                                        "%")
+                                .newLine();
+                    }
             });
                 builder.newLine();
             });
@@ -68,7 +68,7 @@ public class MessageListener extends IcqListener {
             log.info("bot start solve query item message,message:"+message.getMessage());
 //            List<ItemDrop> results = new ArrayList<>();
             List<String> itemStr = new ArrayList<>();
-            Collections.addAll(itemStr,message.getMessage().split(" "));
+            Collections.addAll(itemStr,message.getMessage().split("#"));
             itemStr.remove(0);
             ApplicationContext context =
                     ApplicationContextAwareConfig.getContext();
@@ -78,51 +78,10 @@ public class MessageListener extends IcqListener {
                 List<ItemDrop> drops =
                         context.getBean(DropService.class).queryGlobalByItem(e);
                 drops.forEach(d->{
-                    builder.add(d.getStageName()+"  ")
-                            .add(d.getQuantity()+"  ")
-                            .add(d.getTimes()+" ")
-                            .add(new DecimalFormat("0.00").format(d.getRate()*100)+"%").newLine();
-                });
-                builder.newLine();
-            });
-            message.respond(builder.toString());
-        }else  if(message.getMessage().matches(BotCommand.QUERY_STAGE_RATE)){
-            log.info("bot start solve query stage rate message,message:"+message.getMessage());
-            List<String> strs = new ArrayList<>();
-            Collections.addAll(strs,message.getMessage().split(" "));
-            strs.remove(0);
-            List<List<ItemDrop>> results = new ArrayList<>();
-            MessageBuilder builder = new MessageBuilder();
-            ApplicationContext context =
-                    ApplicationContextAwareConfig.getContext();
-            strs.forEach(e-> results.add(context.getBean(DropService.class).queryGlobalDrobByStage(e)));
-            results.forEach(e->{
-                builder.add(e.get(0).getStageName()+"掉落概率：").newLine();
-                e.forEach(t->{
-                    builder.add(t.getItemName()+":  ")
-                            .add(new DecimalFormat("0.00").format(t.getRate()*100)+
-                                    "%")
-                            .newLine();
-                });
-                builder.newLine();
-            });
-            message.respond(builder.toString());
-        }else if (message.getMessage().matches(BotCommand.QUERY_ITEM_RATE)){
-            log.info("bot start solve query item rate message,message:"+message.getMessage());
-//            List<ItemDrop> results = new ArrayList<>();
-            List<String> itemStr = new ArrayList<>();
-            Collections.addAll(itemStr,message.getMessage().split(" "));
-            itemStr.remove(0);
-            ApplicationContext context =
-                    ApplicationContextAwareConfig.getContext();
-            MessageBuilder builder = new MessageBuilder();
-            itemStr.forEach(e->{
-                builder.add(e+"掉落概率：").newLine();
-                List<ItemDrop> drops =
-                        context.getBean(DropService.class).queryGlobalByItem(e);
-                drops.forEach(d->{
-                    builder.add(d.getStageName()+"  ")
-                            .add(new DecimalFormat("0.00").format(d.getRate()*100)+"%").newLine();
+                    if (d.getRate()>Bounds.DROP_RATE_LOWER&&d.getQuantity()>Bounds.DROP_QUANTITY_LOWER){
+                        builder.add(d.getStageName()+"  ")
+                                .add(new DecimalFormat("0.00").format(d.getRate()*100)+"%").newLine();
+                    }
                 });
                 builder.newLine();
             });
